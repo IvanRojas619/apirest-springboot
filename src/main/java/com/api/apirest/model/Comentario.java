@@ -6,8 +6,8 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@NoArgsConstructor
-@Table(name = "Comnetario",uniqueConstraints = {@UniqueConstraint(columnNames ={"Titulo"})})
+//@NoArgsConstructor
+@Table(name = "Comentario",uniqueConstraints = {@UniqueConstraint(columnNames ={"Titulo"})})
 
 public class Comentario {
     @Id
