@@ -49,6 +49,8 @@ public class PublicacionServiceImpl implements PublicacionService{
         Sort sort =sortDir.equalsIgnoreCase(Sort.Direction.ASC.name())?Sort.by(ordenarPor).ascending():Sort.by(ordenarPor).descending();
         Pageable pageable = PageRequest.of(numeroDePagina,medidaDePagina, /*Sort.by(ordenarPor)*/ sort);
         Page<Publicacion> publicaciones = publicacionRepository.findAll(pageable);
+
+
    //List<Publicacion> publicaciones = (List<Publicacion>) publicacionRepository.findAll(); // Normal retorna lista de publicaciones sin paginar
 
         List<Publicacion> lista_publicaciones=publicaciones.getContent(); // Lista de publicaciones ya listadol
@@ -56,6 +58,7 @@ public class PublicacionServiceImpl implements PublicacionService{
         List<PublicacionDto> contenido = lista_publicaciones.stream().map(publicacion -> convertirEntidadAdto(publicacion)).collect(Collectors.toList());
         PublicacionResponse publicacionResponse =new PublicacionResponse();
         publicacionResponse.setContenido(contenido);
+
         publicacionResponse.setNumeroDePagina(publicaciones.getNumber());
         publicacionResponse.setMedidadDePagina(publicaciones.getSize());
         publicacionResponse.setTotalElementos((int) publicaciones.getTotalElements());

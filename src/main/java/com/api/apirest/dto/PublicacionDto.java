@@ -1,10 +1,14 @@
 package com.api.apirest.dto;
 
+import com.api.apirest.model.Comentario;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
+import java.util.Set;
 
 @NoArgsConstructor
 @Data
@@ -18,5 +22,7 @@ public class PublicacionDto {
     private String descripcion;
     @NotEmpty
     private String contenido;
+    private Set<Comentario> comentarios;
+
 
 }
