@@ -6,6 +6,7 @@ import com.api.apirest.exceptions.ResourceNotFoundException;
 import com.api.apirest.model.Publicacion;
 import com.api.apirest.repository.JajaRepository;
 import com.api.apirest.repository.PublicacionRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,6 +26,8 @@ import java.util.stream.StreamSupport;
 public class PublicacionServiceImpl implements PublicacionService{
      @Autowired
     private PublicacionRepository publicacionRepository;
+     @Autowired
+     private ModelMapper modelMapper;
      private JajaRepository jajaRepository;
     @Override
     public PublicacionDto crearPublicacion(PublicacionDto publicacionDto) {
@@ -96,21 +99,23 @@ return convertirEntidadAdto(publicacionEncontrada);
 
     public Publicacion convertirEntidadDTOaEntidad(PublicacionDto publicacionDto){
 
-        Publicacion publicacion = new Publicacion();
+       /* Publicacion publicacion = new Publicacion();
         publicacion.setId(publicacionDto.getId());
         publicacion.setTitulo(publicacionDto.getTitulo());
         publicacion.setDescripcion(publicacionDto.getDescripcion());
-        publicacion.setContenido(publicacionDto.getContenido());
+        publicacion.setContenido(publicacionDto.getContenido());*/
+        Publicacion publicacion = modelMapper.map(publicacionDto,Publicacion.class); //Implementando ModelMapper para mapear
         return publicacion;
     }
 
     public PublicacionDto convertirEntidadAdto(Publicacion publicacion){
 
-        PublicacionDto publicacionDto = new PublicacionDto();
+       /* PublicacionDto publicacionDto = new PublicacionDto();
         publicacionDto.setId(publicacion.getId());
         publicacionDto.setTitulo(publicacion.getTitulo());
         publicacionDto.setDescripcion(publicacion.getDescripcion());
-        publicacionDto.setContenido(publicacion.getContenido());
+        publicacionDto.setContenido(publicacion.getContenido());*/
+        PublicacionDto publicacionDto = modelMapper.map(publicacion,PublicacionDto.class);//Implementado ModelMapper
         return publicacionDto;
     }
 

@@ -7,6 +7,7 @@ import com.api.apirest.model.Comentario;
 import com.api.apirest.model.Publicacion;
 import com.api.apirest.repository.ComentarioRepository;
 import com.api.apirest.repository.PublicacionRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,8 @@ public class ComentarioServiceImpl implements  ComentarioService{
     private ComentarioRepository comentarioRepository;
     @Autowired
     private PublicacionRepository publicacionRepository;
+    @Autowired
+    private ModelMapper modelMapper;
     @Override
     public ComentarioDto guardarComentario(Long publicacionId, ComentarioDto comentarioDto) {
         //Buscar Publicación por id donde voy a agregar el comentario nuevo
@@ -97,22 +100,24 @@ public class ComentarioServiceImpl implements  ComentarioService{
     }
 
     private ComentarioDto convertirEntidadAdto(Comentario comentario){
-        ComentarioDto comentarioDto = new ComentarioDto();
+       /* ComentarioDto comentarioDto = new ComentarioDto();
         comentarioDto.setId(comentario.getId());
         comentarioDto.setEmail(comentario.getEmail());
         comentarioDto.setNombre(comentario.getNombre());
-        comentarioDto.setCuerpo(comentario.getCuerpo());
+        comentarioDto.setCuerpo(comentario.getCuerpo());*/
+        ComentarioDto comentarioDto = modelMapper.map(comentario,ComentarioDto.class); // Implementando modelmapper
         return comentarioDto;
 
     }
 
     private Comentario convertirDtoAentidad(ComentarioDto comentarioDto){
 
-        Comentario comentario = new Comentario();
+        /*Comentario comentario = new Comentario();
         comentario.setId(comentarioDto.getId());
         comentario.setNombre(comentarioDto.getNombre());
         comentario.setEmail(comentarioDto.getEmail());
-        comentario.setCuerpo(comentarioDto.getCuerpo());
+        comentario.setCuerpo(comentarioDto.getCuerpo());*/
+        Comentario comentario = modelMapper.map(comentarioDto,Comentario.class);// implementando modelmapper
         return comentario;
     }
 
