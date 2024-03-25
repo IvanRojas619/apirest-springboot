@@ -5,27 +5,28 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Data
+//@Data
 //@NoArgsConstructor
 @Table(name = "Comentario",uniqueConstraints = {@UniqueConstraint(columnNames ={"Titulo"})})
 
 public class Comentario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
+
     private String nombre;
     private String email;
     private String cuerpo;
 
-    @ManyToOne(targetEntity = Publicacion.class,fetch = FetchType.LAZY)
-    @JoinColumn(name = "publicacion_id",nullable = false)
-    private  Publicacion publicacion;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "publicacion_id", nullable = false)
+    private Publicacion publicacion;
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -61,15 +62,8 @@ public class Comentario {
         this.publicacion = publicacion;
     }
 
-    public Comentario(Long id, String nombre, String email, String cuerpo, Publicacion publicacion) {
-        this.id = id;
-        this.nombre = nombre;
-        this.email = email;
-        this.cuerpo = cuerpo;
-        this.publicacion = publicacion;
-    }
-
     public Comentario() {
         super();
     }
+
 }

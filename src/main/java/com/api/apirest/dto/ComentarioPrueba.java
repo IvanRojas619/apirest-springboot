@@ -4,7 +4,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
-public class ComentarioDto {
+public class ComentarioPrueba {
 
     private long id;
 
@@ -51,8 +51,16 @@ public class ComentarioDto {
         this.cuerpo = cuerpo;
     }
 
-    public ComentarioDto() {
+    public ComentarioPrueba() {
         super();
     }
 
+    public ComentarioPrueba(long id, String nombre, String email, String cuerpo) {
+        this.id = id;
+        this.nombre = nombre;
+        this.email = email;
+        this.cuerpo = cuerpo;
+    }
 }
+
+

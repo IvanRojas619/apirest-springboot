@@ -1,8 +1,8 @@
 package com.api.apirest.service;
 
-import com.api.apirest.dto.PublicacionDto;
-import com.api.apirest.dto.PublicacionResponse;
+import com.api.apirest.dto.*;
 import com.api.apirest.exceptions.ResourceNotFoundException;
+import com.api.apirest.model.Comentario;
 import com.api.apirest.model.Publicacion;
 import com.api.apirest.repository.JajaRepository;
 import com.api.apirest.repository.PublicacionRepository;
@@ -18,7 +18,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 @Service
@@ -62,8 +64,8 @@ public class PublicacionServiceImpl implements PublicacionService{
         PublicacionResponse publicacionResponse =new PublicacionResponse();
         publicacionResponse.setContenido(contenido);
 
-        publicacionResponse.setNumeroDePagina(publicaciones.getNumber());
-        publicacionResponse.setMedidadDePagina(publicaciones.getSize());
+        publicacionResponse.setNumeroPagina(publicaciones.getNumber());
+        publicacionResponse.setMedidaPagina(publicaciones.getSize());
         publicacionResponse.setTotalElementos((int) publicaciones.getTotalElements());
         publicacionResponse.setTotalPaginas(publicaciones.getTotalPages());
         publicacionResponse.setUltima(publicaciones.isLast());
@@ -95,6 +97,44 @@ return convertirEntidadAdto(publicacionEncontrada);
     public void eliminarPublicacion(Long id) {
         Publicacion publicacionAeliminar = publicacionRepository.findById(id).orElseThrow(()->  new ResourceNotFoundException("Publicacion","id",id));
         publicacionRepository.delete(publicacionAeliminar);
+    }
+public PublicacionPrueba publicacionToPublicacionPrueba(Publicacion publicacion){
+    List<ComentarioPrueba> comentarios2 = new ArrayList<ComentarioPrueba>();
+        PublicacionPrueba publicacionPrueba = new PublicacionPrueba();
+        publicacionPrueba.setTitulo(publicacion.getTitulo());
+        publicacionPrueba.setContenido(publicacion.getContenido());
+        publicacionPrueba.setDescripcion(publicacion.getDescripcion());
+        Set<Comentario> comentarios = publicacion.getComentarios();
+        for(Comentario comentario: comentarios){
+
+            comentarios2.add(new ComentarioPrueba(comentario.getId(),comentario.getNombre(),comentario.getEmail(),comentario.getCuerpo()));
+
+        }
+        publicacionPrueba.setComentarios(comentarios2);
+        return publicacionPrueba;
+
+}
+public List<PublicacionPrueba> publicationsToPublicacionesPruebas(List<Publicacion> publicaciones){
+
+List<PublicacionPrueba> publicacionesPruebas = new ArrayList<>();
+
+for(Publicacion publicacion : publicaciones ){
+    publicacionesPruebas.add(publicacionToPublicacionPrueba(publicacion));
+}
+return publicacionesPruebas;
+
+
+}
+
+
+    @Override
+    public List<PublicacionPrueba> pruebaChida() {
+        List<Publicacion> publicaciones = publicacionRepository.findAll();
+
+        return publicationsToPublicacionesPruebas(publicaciones);
+
+
+
     }
 
     public Publicacion convertirEntidadDTOaEntidad(PublicacionDto publicacionDto){

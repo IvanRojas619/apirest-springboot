@@ -1,6 +1,7 @@
 package com.api.apirest.controller;
 
 import com.api.apirest.dto.PublicacionDto;
+import com.api.apirest.dto.PublicacionPrueba;
 import com.api.apirest.dto.PublicacionResponse;
 import com.api.apirest.service.PublicacionService;
 import com.api.apirest.utileria.AppConstantes;
@@ -68,6 +69,12 @@ public class PublicacionController {
     public ResponseEntity<String> pruebita(@RequestParam(name="name") String name){
 
         return new ResponseEntity<>(String.format("Hola %s",name),HttpStatus.OK);
+    }
+
+    @GetMapping("/pruebalista")
+    public ResponseEntity<List<PublicacionPrueba>> pruebaLista(){
+
+        return new ResponseEntity<>(publicacionService.pruebaChida(),HttpStatus.OK);
     }
 
 }
