@@ -10,6 +10,8 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -20,6 +22,7 @@ public class PublicacionDto {
     private Long id;
 
     @NotEmpty
+
     @Size(min = 2,message = "El titulo de la publicación deberia tener al menos 2 caracteres")
     private String titulo;
 

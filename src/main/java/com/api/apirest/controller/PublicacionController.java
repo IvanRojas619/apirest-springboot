@@ -25,7 +25,7 @@ public class PublicacionController {
     private PublicacionService publicacionService;
 
     @PostMapping()
-    public ResponseEntity<PublicacionDto> guardarPublicacion(@Valid@RequestBody PublicacionDto publicacionDto){
+    public ResponseEntity<PublicacionDto> guardarPublicacion(@RequestBody @Valid  PublicacionDto publicacionDto){
 
         return new ResponseEntity<>(publicacionService.crearPublicacion(publicacionDto), HttpStatus.CREATED);
 
@@ -52,7 +52,7 @@ public class PublicacionController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PublicacionDto>actualizarPiublicacion(@RequestBody PublicacionDto publicacionDto,@PathVariable(name="id")Long id ){
+    public ResponseEntity<PublicacionDto>actualizarPiublicacion(@Valid @RequestBody PublicacionDto publicacionDto,@PathVariable(name="id")Long id ){
         PublicacionDto publicacionDtoActualizada = publicacionService.editarPublicacion(id,publicacionDto);
 
         return new ResponseEntity<>(publicacionDtoActualizada,HttpStatus.OK);
